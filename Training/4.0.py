@@ -33,7 +33,7 @@ def find_element(tree, element_name):
             if result:
                 break
     else:
-        result: None
+        result = None
     return result
 
 
