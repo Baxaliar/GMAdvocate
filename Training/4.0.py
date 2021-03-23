@@ -39,3 +39,9 @@ def find_element(tree, element_name):
 
 res = find_element(tree=html_dom, element_name='div')
 print(res)
+
+# Встроенная функция списков
+profit = [100, 20, 5, 1200, 42, 36]
+days = ['пн', 'вт', 'ср', 'чт', 'пт', ]
+all_cash = zip(days, profit)
+print(list(all_cash))
