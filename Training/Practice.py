@@ -1,23 +1,41 @@
 
 import simple_draw as sd
 
-length = 200
-n = 0
-
 
 def draw_figure(sides_number, point, angle):
-    v1 = sd.get_vector(start_point=point, angle=0, length=100, width=3)
-    v1.draw()
-
-    for i in range(0, sides_number):
-        v_prev = sd.get_vector(start_point=v1.end_point, angle=angle + (360 / sides_number), length=100, width=3)
-        v_prev.draw()
-
-        v_next = sd.get_vector(start_point=v_prev.end_point, angle=angle + (360 / sides_number)*i, length=100, width=3)
+    p_next = point
+    for i in range(sides_number-1):
+        v_next = sd.get_vector(start_point=p_next, angle=angle + (360 / sides_number)*i, length=100, width=3)
         v_next.draw()
+        p_next = sd.get_point(v_next.end_point.x, v_next.end_point.y)
+    else:
+        p_last = p_next
+        sd.line(start_point=p_last, end_point=point, width=3)
 
 
-point_0 = sd.get_point(300, 300)
-draw_figure(sides_number=3, point=point_0, angle=0)
+def triangle(point):
+    draw_figure(3, point=point, angle=0)
+
+
+def square(point):
+    draw_figure(4, point=point, angle=0)
+
+
+def pentagram(point):
+    draw_figure(5, point=point, angle=0)
+
+
+def hexagon(point):
+    draw_figure(6, point=point, angle=0)
+
+
+point_0 = sd.get_point(100, 100)
+point_1 = sd.get_point(400, 100)
+point_2 = sd.get_point(100, 300)
+point_3 = sd.get_point(400, 300)
+triangle(point=point_0)
+square(point=point_1)
+pentagram(point=point_2)
+hexagon(point=point_3)
 
 sd.pause()
