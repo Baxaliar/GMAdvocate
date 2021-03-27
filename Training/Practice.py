@@ -1,34 +1,23 @@
 
 import simple_draw as sd
 
-# Нарисовать треугольник из точки (300, 300) с длиной стороны 200
-# length = 200
-# point = sd.get_point(300, 300)
-
-# v1 = sd.get_vector(start_point=point, angle=0, length=200, width=3)
-# v1.draw()
-#
-# v2 = sd.get_vector(start_point=v1.end_point, angle=120, length=200, width=3)
-# v2.draw()
-#
-# v3 = sd.get_vector(start_point=v2.end_point, angle=240, length=200, width=3)
-# v3.draw()
+length = 200
+n = 0
 
 
-# Определить функцию рисования треугольника из заданной точки с заданным наклоном
-def triangle(point, angle=0):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=200, width=3)
+def draw_figure(sides_number, point, angle):
+    v1 = sd.get_vector(start_point=point, angle=0, length=100, width=3)
     v1.draw()
 
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 120, length=200, width=3)
-    v2.draw()
+    for i in range(0, sides_number):
+        v_prev = sd.get_vector(start_point=v1.end_point, angle=angle + (360 / sides_number), length=100, width=3)
+        v_prev.draw()
 
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 240, length=200, width=3)
-    v3.draw()
+        v_next = sd.get_vector(start_point=v_prev.end_point, angle=angle + (360 / sides_number)*i, length=100, width=3)
+        v_next.draw()
 
 
 point_0 = sd.get_point(300, 300)
-for angle in range(0, 361, 30):
-    triangle(point=point_0, angle=angle)
+draw_figure(sides_number=3, point=point_0, angle=0)
 
 sd.pause()
