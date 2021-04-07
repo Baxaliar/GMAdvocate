@@ -1,41 +1,30 @@
 
 import simple_draw as sd
 
-
-def draw_figure(sides_number, point, angle):
-    p_next = point
-    for i in range(sides_number-1):
-        v_next = sd.get_vector(start_point=p_next, angle=angle + (360 / sides_number)*i, length=100, width=3)
-        v_next.draw()
-        p_next = sd.get_point(v_next.end_point.x, v_next.end_point.y)
-    else:
-        p_last = p_next
-        sd.line(start_point=p_last, end_point=point, width=3)
+sd.resolution = (1366, 768)
 
 
-def triangle(point):
-    draw_figure(3, point=point, angle=0)
+def branch(point, angle, length):
+    v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+    v1.draw()
+    return v1.end_point
 
 
-def square(point):
-    draw_figure(4, point=point, angle=0)
+# Цикл
+angle_0 = 90
+length_0 = 200
+point_0 = sd.get_point(100, 5)
 
+next_angle = angle_0
+next_length = length_0
+next_point = point_0
 
-def pentagram(point):
-    draw_figure(5, point=point, angle=0)
+while next_length > 1:
+    next_point = branch(point=next_point, angle=next_angle, length=next_length)
+    next_angle = next_angle - 30
+    next_length = next_length * .75
 
+# сделать функцию branch рекурсивной
 
-def hexagon(point):
-    draw_figure(6, point=point, angle=0)
-
-
-point_0 = sd.get_point(100, 100)
-point_1 = sd.get_point(400, 100)
-point_2 = sd.get_point(100, 300)
-point_3 = sd.get_point(400, 300)
-triangle(point=point_0)
-square(point=point_1)
-pentagram(point=point_2)
-hexagon(point=point_3)
 
 sd.pause()
