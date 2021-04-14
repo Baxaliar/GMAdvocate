@@ -2,6 +2,7 @@
 import simple_draw as sd
 
 
+# Functions
 def draw_figure(sides_number, point, angle):
     p_next = point
     for side in range(sides_number - 1):
@@ -28,6 +29,7 @@ def hexagon(point):
     draw_figure(6, point=point, angle=0)
 
 
+# Input block
 point_0 = sd.get_point(100, 110)
 point_1 = sd.get_point(400, 100)
 point_2 = sd.get_point(100, 310)
