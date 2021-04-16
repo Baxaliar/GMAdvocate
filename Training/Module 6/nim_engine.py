@@ -1,5 +1,4 @@
 
-# MAX_BUNCHES = 5
 from random import randint
 
 _holder = []
@@ -13,7 +12,7 @@ def put_stones():
 
 
 def take_from_bunch(position, quantity):
-    if 1 <= position < len(_holder):
+    if 1 <= position <= len(_holder):
         _holder[position - 1] -= quantity
 
 
