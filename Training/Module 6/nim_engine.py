@@ -1,15 +1,25 @@
 
+# MAX_BUNCHES = 5
+from random import randint
+
+_holder = []
+
+
 def put_stones():
-    pass
+    global _holder
+    _holder = []
+    for i in range(5):
+        _holder.append(randint(1, 20))
 
 
 def take_from_bunch(position, quantity):
-    pass
+    if 1 <= position < len(_holder):
+        _holder[position - 1] -= quantity
 
 
 def get_bunches():
-    pass
+    return _holder
 
 
 def gameover():
-    pass
+    return sum(_holder) == 0

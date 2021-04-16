@@ -7,6 +7,6 @@ while True:
     print(get_bunches())
     pos = input('Откуда берём?')
     qua = input('Сколько берём?')
-    take_from_bunch(position=pos, quantity=qua)
+    take_from_bunch(position=int(pos), quantity=int(qua))
     if gameover():
         break
