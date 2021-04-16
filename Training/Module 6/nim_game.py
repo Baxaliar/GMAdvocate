@@ -1,4 +1,4 @@
-from nim_engine import put_stones, get_bunches, take_from_bunch, gameover
+from nim_engine import put_stones, get_bunches, take_from_bunch, game_over
 from termcolor import cprint, colored
 
 put_stones()
@@ -11,7 +11,7 @@ while True:
     pos = input(colored('Откуда берём?', color=user_color))
     qua = input(colored('Сколько берём?', color=user_color))
     take_from_bunch(position=int(pos), quantity=int(qua))
-    if gameover():
+    if game_over():
         break
     user_number = 2 if user_number == 1 else 1
 
