@@ -1,4 +1,4 @@
 
-from Game_engine import random_number, number_check
+from Game_engine import game
 
-random_number()
+game()
