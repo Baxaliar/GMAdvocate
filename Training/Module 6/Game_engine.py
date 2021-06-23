@@ -4,27 +4,29 @@ from random import randint
 random_number_list = []
 
 
-def random_number():
+def random_number():  # Генератор случайного хххх числа с неповторяющимися цифрами
     number = str(randint(1000, 9999))
-    for digits in number:
-        random_number_list.append(digits)
-    a, b, c, d = number[0], number[1], number[2], number[3]
+    a, b, c, d = number[0], number[1], number[2], number[3]  # Проверка не повторяются ли цифры в числе
     if a == b or a == c or a == d or b == c or b == d or c == d:
         random_number()
-    # print(*random_number_list)  # для упрощения отладки
+    else:
+        for digits in number:
+            random_number_list.append(digits)
+        print(*random_number_list)  # для упрощения отладки
 
 
-def number_check():
+def number_check():  # Проверка числа, введённого игроком и подсчёт Быков/Коров
     print('Компьютер загадал число', 'Введите число, состоящее из 4 различных цифр', sep='\n')
     while True:
         bulls_count = 0
         cows_count = 0
         usr_digits = []
         usr_number = input()
-        a, b, c, d = usr_number[0], usr_number[1], usr_number[2], usr_number[3]
-        if a == b or a == c or a == d or b == c or b == d or c == d:
-            number_check()
         if usr_number.isdigit() and len(usr_number) == 4:
+            a, b, c, d = usr_number[0], usr_number[1],\
+                         usr_number[2], usr_number[3]  # Проверка наличия повторяющихся цифр
+            if a == b or a == c or a == d or b == c or b == d or c == d:
+                number_check()
             for digits in str(usr_number):
                 usr_digits.append(digits)
             for i in range(4):
@@ -43,7 +45,7 @@ def number_check():
                     game()
                 elif decision.lower() == 'нет':
                     print('Спасибо за игру! До свидания!')
-                    break
+                    exit()
                 else:
                     print('Ответ неясен, игра завершена')
                     break
