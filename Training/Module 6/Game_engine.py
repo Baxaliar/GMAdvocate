@@ -1,10 +1,12 @@
 
 from random import randint
 
+number, bulls_cow = 0, {}
 random_number_list = []
 
 
 def random_number():  # Генератор случайного хххх числа с неповторяющимися цифрами
+    global number
     number = str(randint(1000, 9999))
     a, b, c, d = number[0], number[1], number[2], number[3]  # Проверка не повторяются ли цифры в числе
     if a == b or a == c or a == d or b == c or b == d or c == d:
@@ -16,6 +18,7 @@ def random_number():  # Генератор случайного хххх чис�
 
 
 def number_check():  # Проверка числа, введённого игроком и подсчёт Быков/Коров
+    global bulls_cow
     print('Компьютер загадал число', 'Введите число, состоящее из 4 различных цифр', sep='\n')
     while True:
         bulls_count = 0
@@ -33,11 +36,15 @@ def number_check():  # Проверка числа, введённого игр�
                 if usr_digits[i] in random_number_list:
                     if usr_digits[i] == random_number_list[i]:
                         bulls_count += 1
+                        bulls_cow = {'Быков': bulls_count, 'Коров': cows_count}
                         continue
                     cows_count += 1
+                    bulls_cow = {'Быков': bulls_count, 'Коров': cows_count}
             # print(*usr_digits)  # для упрощения отладки
             if bulls_count != 4:
-                print(f'Быков: {bulls_count}, Коров: {cows_count}', 'Введите новое число: ', sep='\n')
+                # print(f'Быков: {bulls_count}, Коров: {cows_count}', 'Введите новое число: ', sep='\n')  # Для
+                # десктопной версии программы
+                print(bulls_cow)
             else:
                 break
         else:
