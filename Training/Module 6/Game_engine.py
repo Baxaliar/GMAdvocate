@@ -1,8 +1,9 @@
 
 from random import randint
 
-number, bulls_cow = 0, {}
+res, moves_count, number, bulls_cow = 0, 0, 0, {}
 random_number_list = []
+res = 0
 
 
 def random_number():  # Генератор случайного хххх числа с неповторяющимися цифрами
@@ -14,7 +15,7 @@ def random_number():  # Генератор случайного хххх чис�
     else:
         for digits in number:
             random_number_list.append(digits)
-        # print(*random_number_list)  # для упрощения отладки
+        print(*random_number_list)  # для упрощения отладки
 
 
 def number_check():  # Проверка числа, введённого игроком и подсчёт Быков/Коров
@@ -39,7 +40,11 @@ def number_check():  # Проверка числа, введённого игр�
                         bulls_cow = {'Быков': bulls_count, 'Коров': cows_count}
                         continue
                     cows_count += 1
+                    global moves_count
+                    moves_count += 1
                     bulls_cow = {'Быков': bulls_count, 'Коров': cows_count}
+                    global res
+                    res = moves_count
             # print(*usr_digits)  # для упрощения отладки
             if bulls_count != 4:
                 # print(f'Быков: {bulls_count}, Коров: {cows_count}', 'Введите новое число: ', sep='\n')  # Для
@@ -49,23 +54,3 @@ def number_check():  # Проверка числа, введённого игр�
                 break
         else:
             print('Введите число, состоящее из 4 различных цифр')
-
-
-def game_restart():  # Перезапуск/конец игры по желанию игрока
-    print('Вы угадали, желаете повторить?')
-    decision = input('Да, Нет: ')
-    if decision.lower() == 'да':
-        random_number_list.clear()  # Обязательная очистка загаданного числа
-        game()
-    elif decision.lower() == 'нет':
-        print('Спасибо за игру! До свидания!')
-        exit()
-    else:
-        print('Ответ неясен, игра завершена')
-        exit()
-
-
-def game():
-    random_number()
-    number_check()
-    game_restart()
