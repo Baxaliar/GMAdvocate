@@ -20,7 +20,7 @@ class Man:
             self.fullness += 10
             self.house.food -= 10
         else:
-            print('{} нет еды'.format(self.name))
+            cprint('{} нет еды'.format(self.name), color='red')
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='magenta')
@@ -28,7 +28,7 @@ class Man:
         self.fullness -= 10
 
     def play_dota(self):
-        cprint('{} играл в доту целый день'.format(self.name), color='cyan')
+        cprint('{} смотрел MTV'.format(self.name), color='cyan')
         self.fullness -= 10
 
     def shopping(self):
@@ -37,7 +37,7 @@ class Man:
             self.house.money -= 50
             self.house.food += 50
         else:
-            print('{} деньги кончились'.format(self.name))
+            cprint('{} деньги кончились'.format(self.name), color='red')
 
     def go_into_house(self, house):
         self.house = house
@@ -46,7 +46,7 @@ class Man:
 
     def act(self):
         if self.fullness <= 0:
-            print('{} умер'.format(self.name))
+            cprint('{} умер'.format(self.name), color='red')
             self.alive = False
             return
         dice = randint(1, 6)
@@ -78,6 +78,7 @@ def life_of_beavis_and_butthead():
     beavis = Man(name='Бивис')
     butthead = Man(name='Баттхед')
     mad_house = House()
+    print(beavis, butthead, mad_house, sep='\n')
     beavis.go_into_house(mad_house)
     butthead.go_into_house(mad_house)
     for day in range(1, 366):
