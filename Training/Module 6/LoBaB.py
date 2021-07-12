@@ -49,9 +49,9 @@ class Human:
             self.alive = False
             return
         dice = randint(1, 6)
-        if self.fullness < 20:
-            self.eat()
-        elif self.house.food < 10:
+        # if self.fullness < 20:
+        #     self.eat()
+        if self.house.food < 10:
             self.shopping()
         elif self.house.money < 10:
             self.work()
@@ -92,8 +92,6 @@ def life_of_mad_house():
         for inhabitant in inhabitants:
             if inhabitant.alive:
                 inhabitant.act()
-                cprint('======================================', color='yellow')
-                print(inhabitant, mad_house, sep='\n')
             elif not inhabitant.alive:
                 cprint('======================================', color='yellow')
                 total_corpses += 1
@@ -104,6 +102,12 @@ def life_of_mad_house():
                         corpses_list.append(corpse.name)
                     print(*corpses_list, sep=', ', end='!')
                     exit()
+        cprint('=============в конце дня==============', color='yellow')
+        for inhabitant in inhabitants:
+            if inhabitant.alive:
+                print(inhabitant)
+        cprint('================в доме================', color='yellow')
+        print(mad_house)
 
 
 life_of_mad_house()
