@@ -3,7 +3,7 @@ from random import randint
 from termcolor import cprint
 
 
-class Man:
+class Human:
 
     def __init__(self, name):
         self.house = None
@@ -46,7 +46,6 @@ class Man:
 
     def act(self):
         if self.fullness <= 0:
-            cprint('{} умер'.format(self.name), color='red')
             self.alive = False
             return
         dice = randint(1, 6)
@@ -74,31 +73,37 @@ class House:
         return 'В доме - {} еды,  денег - {}.'.format(self.food, self.money)
 
 
-def life_of_madison_and_holmes():
-    daniel_madison = Man(name='Мэдисон')
-    alan_tcb = Man(name='Алан')
+inhabitants = [
+    Human(name='Мэдисон'),
+    Human(name='Алан'),
+    Human(name='Уильямс'),
+    Human(name='Мэган')
+]
+
+
+def life_of_mad_house():
     mad_house = House()
-    print(daniel_madison, alan_tcb, mad_house, sep='\n')
-    daniel_madison.go_into_house(mad_house)
-    alan_tcb.go_into_house(mad_house)
+    for inhabitant in inhabitants:
+        inhabitant.go_into_house(mad_house)
     for day in range(1, 366):
-        cprint('============== день {} =============='.format(day), color='yellow')
-        if daniel_madison.alive and alan_tcb.alive:
-            daniel_madison.act()
-            alan_tcb.act()
-            cprint('======================================', color='yellow')
-            print(daniel_madison, alan_tcb, mad_house, sep='\n')
-        elif daniel_madison.alive:
-            daniel_madison.act()
-            cprint('======================================', color='yellow')
-            print(daniel_madison, '{} умер!'.format(alan_tcb.name), mad_house, sep='\n')
-        elif alan_tcb.alive:
-            daniel_madison.act()
-            cprint('======================================', color='yellow')
-            cprint(alan_tcb, '{} умер!'.format(daniel_madison.name), mad_house, sep='\n', color='red')
-        else:
-            cprint('Не будь как {} и {}!'.format(daniel_madison.name, alan_tcb.name), color='red')
-            break
+        total_corpses = 0
+        corpses_list = []
+        cprint('============== день {} =============='.format(day), color='blue', attrs=['reverse'])
+        for inhabitant in inhabitants:
+            if inhabitant.alive:
+                inhabitant.act()
+                cprint('======================================', color='yellow')
+                print(inhabitant, mad_house, sep='\n')
+            elif not inhabitant.alive:
+                cprint('======================================', color='yellow')
+                total_corpses += 1
+                cprint('{} умер'.format(inhabitant.name), color='red')
+                if total_corpses == len(inhabitants):
+                    print('Не будь как', end=' ')
+                    for corpse in inhabitants:
+                        corpses_list.append(corpse.name)
+                    print(*corpses_list, sep=', ', end='!')
+                    exit()
 
 
-life_of_madison_and_holmes()
+life_of_mad_house()
