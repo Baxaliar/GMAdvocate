@@ -27,8 +27,8 @@ class Man:
         self.house.money += 50
         self.fullness -= 10
 
-    def play_dota(self):
-        cprint('{} смотрел MTV'.format(self.name), color='cyan')
+    def shuffle_cards(self):
+        cprint('{} тасовал карты'.format(self.name), color='cyan')
         self.fullness -= 10
 
     def shopping(self):
@@ -61,7 +61,7 @@ class Man:
         elif dice == 2:
             self.eat()
         else:
-            self.play_dota()
+            self.shuffle_cards()
 
 
 class House:
@@ -74,30 +74,31 @@ class House:
         return 'В доме - {} еды,  денег - {}.'.format(self.food, self.money)
 
 
-def life_of_beavis_and_butthead():
-    beavis = Man(name='Бивис')
-    butthead = Man(name='Баттхед')
+def life_of_madison_and_holmes():
+    daniel_madison = Man(name='Мэдисон')
+    alan_tcb = Man(name='Алан')
     mad_house = House()
-    print(beavis, butthead, mad_house, sep='\n')
-    beavis.go_into_house(mad_house)
-    butthead.go_into_house(mad_house)
+    print(daniel_madison, alan_tcb, mad_house, sep='\n')
+    daniel_madison.go_into_house(mad_house)
+    alan_tcb.go_into_house(mad_house)
     for day in range(1, 366):
-        if beavis.alive and butthead.alive:
-            cprint('============== день {} =============='.format(day), color='yellow')
-            beavis.act()
-            butthead.act()
-            print(beavis, butthead, mad_house, sep='\n')
-        elif beavis.alive:
-            cprint('============== день {} =============='.format(day), color='yellow')
-            beavis.act()
-            print(beavis, '{} умер!'.format(butthead.name), mad_house, sep='\n')
-        elif butthead.alive:
-            cprint('============== день {} =============='.format(day), color='yellow')
-            beavis.act()
-            cprint(butthead, '{} умер!'.format(beavis.name), mad_house, sep='\n', color='red')
+        cprint('============== день {} =============='.format(day), color='yellow')
+        if daniel_madison.alive and alan_tcb.alive:
+            daniel_madison.act()
+            alan_tcb.act()
+            cprint('======================================', color='yellow')
+            print(daniel_madison, alan_tcb, mad_house, sep='\n')
+        elif daniel_madison.alive:
+            daniel_madison.act()
+            cprint('======================================', color='yellow')
+            print(daniel_madison, '{} умер!'.format(alan_tcb.name), mad_house, sep='\n')
+        elif alan_tcb.alive:
+            daniel_madison.act()
+            cprint('======================================', color='yellow')
+            cprint(alan_tcb, '{} умер!'.format(daniel_madison.name), mad_house, sep='\n', color='red')
         else:
-            cprint('Не будь как {} и {}!'.format(beavis.name, butthead.name), color='red')
+            cprint('Не будь как {} и {}!'.format(daniel_madison.name, alan_tcb.name), color='red')
             break
 
 
-life_of_beavis_and_butthead()
+life_of_madison_and_holmes()
