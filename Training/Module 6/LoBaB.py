@@ -15,16 +15,16 @@ class Human:
         return 'Я - {}, сытость {}.'.format(self.name, self.fullness)
 
     def eat(self):
-        if self.house.food >= 10:
+        if self.house.fridge.food >= 10:
             cprint('{} поел'.format(self.name), color='blue')
             self.fullness += 10
-            self.house.food -= 10
+            self.house.fridge.food -= 10
         else:
             cprint('{} нет еды'.format(self.name), color='red')
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='magenta')
-        self.house.money += 50
+        self.house.nightstand.money += 50
         self.fullness -= 10
 
     def shuffle_cards(self):
@@ -32,10 +32,10 @@ class Human:
         self.fullness -= 10
 
     def shopping(self):
-        if self.house.money >= 50:
+        if self.house.nightstand.money >= 50:
             cprint('{} сходил в магазин за едой'.format(self.name), color='green')
-            self.house.money -= 50
-            self.house.food += 50
+            self.house.nightstand.money -= 50
+            self.house.fridge.food += 50
         else:
             cprint('{} деньги кончились'.format(self.name), color='red')
 
@@ -49,11 +49,11 @@ class Human:
             self.alive = False
             return
         dice = randint(1, 6)
-        # if self.fullness < 20:
-        #     self.eat()
-        if self.house.food < 10:
+        if self.fullness < 20:
+            self.eat()
+        elif self.house.fridge.food < 10:
             self.shopping()
-        elif self.house.money < 10:
+        elif self.house.nightstand.money < 10:
             self.work()
         elif dice == 1:
             self.work()
@@ -66,11 +66,23 @@ class Human:
 class House:
 
     def __init__(self):
-        self.food = 10
-        self.money = 50
+        self.fridge = None
+        self.nightstand = None
 
     def __str__(self):
-        return 'В доме - {} еды,  денег - {}.'.format(self.food, self.money)
+        return 'В доме - {} еды,  денег - {}.'.format(self.fridge.food, self.nightstand.money)
+
+
+class Fridge:
+
+    def __init__(self):
+        self.food = 10
+
+
+class Nightstand:
+
+    def __init__(self):
+        self.money = 50
 
 
 inhabitants = [
@@ -83,6 +95,8 @@ inhabitants = [
 
 def life_of_mad_house():
     mad_house = House()
+    mad_house.fridge = Fridge()
+    mad_house.nightstand = Nightstand()
     for inhabitant in inhabitants:
         inhabitant.go_into_house(mad_house)
     for day in range(1, 366):
