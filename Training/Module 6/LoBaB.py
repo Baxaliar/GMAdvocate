@@ -24,7 +24,7 @@ class Human:
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='magenta')
-        self.house.nightstand.money += 50
+        self.house.nightstand.money += 150
         self.fullness -= 10
 
     def shuffle_cards(self):
@@ -55,6 +55,8 @@ class Human:
             self.shopping()
         elif self.house.nightstand.money < 10:
             self.work()
+        elif self.house.cat_food < 10:
+            self.shopping_for_cat()
         elif dice == 1:
             self.work()
         elif dice == 2:
@@ -62,21 +64,75 @@ class Human:
         else:
             self.shuffle_cards()
 
+    def get_cat(self, cat):
+        self.house.cat = cat
+        self.house.cat_bowl = CatBowl()
+        self.house.cat_food = 0
+        cprint('{} въехал в дом'.format(self.house.cat.name), color='grey')
+
+    def shopping_for_cat(self):
+        if self.house.nightstand.money >= 50:
+            cprint('{} сходил в магазин за едой коту'.format(self.name), color='green')
+            self.house.nightstand.money -= 50
+            self.house.cat_bowl.food += 50
+        else:
+            cprint('{} деньги кончились'.format(self.name), color='red')
+
+    def clean_house(self):
+        self.house.dirt -= 100
+        self.fullness -= 20
+
+
+class Cat:
+
+    def __init__(self, name):
+        self.house = None
+        self.name = name
+        self.fullness = 50
+        self.alive = True
+        self.food = None
+
+    def __str__(self):
+        return 'Я - {}, сытость {}.'.format(self.name, self.fullness)
+
+    def sleep(self):
+        self.fullness -= 10
+
+    def fun(self):
+        if self.fullness <= 0:
+            self.alive = False
+            return
+        else:
+            self.fullness -= 10
+            self.house.dirt += 5
+
 
 class House:
 
-    def __init__(self):
+    def __init__(self, cat):
         self.fridge = None
         self.nightstand = None
+        self.cat = cat
+        self.cat_food = 0
+        self.dirt = 0
+        self.cat_bowl = None
 
     def __str__(self):
-        return 'В доме - {} еды,  денег - {}.'.format(self.fridge.food, self.nightstand.money)
+        return 'В доме - {} еды,  денег - {}, кошачьей еды - {}, грязи - {}'.format(
+            self.fridge.food, self.nightstand.money, self.cat_food, self.dirt)
 
 
 class Fridge:
 
     def __init__(self):
         self.food = 10
+
+
+class CatBowl:
+
+    def __init__(self):
+        self.cat = None
+        self.food = 0
 
 
 class Nightstand:
@@ -91,14 +147,23 @@ inhabitants = [
     Human(name='Уильямс'),
     Human(name='Мэган')
 ]
+cats = [
+
+    Cat(name='Тень')
+]
 
 
 def life_of_mad_house():
-    mad_house = House()
+    mad_house = House(cat=None)
     mad_house.fridge = Fridge()
     mad_house.nightstand = Nightstand()
+    print(mad_house)
     for inhabitant in inhabitants:
         inhabitant.go_into_house(mad_house)
+    for cat in cats:
+        inhabitants[randint(1, len(inhabitants))].get_cat(cat)
+    mad_house.cat_bowl = CatBowl()
+    print(mad_house)
     for day in range(1, 366):
         total_corpses = 0
         corpses_list = []
